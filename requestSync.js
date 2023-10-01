@@ -1,20 +1,25 @@
 const url =
-  "https://ec2-54-64-246-136.ap-northeast_1.compute.amazonaws.com/delay-clock";
-var XMLHttpRequest = require("xmlhttprequest").XMLHttpRequest;
+  "https://ec2-54-64-246-136.ap-northeast-1.compute.amazonaws.com/delay-clock";
+const request = require("sync-request");
 
 function requestSync(url) {
   // write code to request url synchronously
-  var xhr = new XMLHttpRequest();
-  xhr.open("GET", url, false); // 第三個參數 `false` 使得請求為同步
-  xhr.send();
+  const label = `Request to ${url} at ${Date.now()}`;
+  console.time(label);
 
-  if (xhr.status !== 200) {
-    throw new Error(
-      `Request failed with status ${xhr.status}: ${xhr.statusText}`
-    );
+  try {
+    const response = request("GET", url);
+    if (response.statusCode !== 200) {
+      throw new Error(
+        `Request failed with status ${response.statusCode}: ${response.statusMessage}`
+      );
+    }
+    console.timeEnd(label);
+    return response.getBody("utf8");
+  } catch (error) {
+    console.timeEnd(label);
+    console.error("Error: ", error);
   }
-
-  return xhr.responseText;
 }
 requestSync(url); // would print out the execution time
 requestSync(url);
