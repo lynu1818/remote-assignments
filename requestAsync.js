@@ -1,5 +1,7 @@
 //const fetch = require("node-fetch");
 
+console.time("Total Execution Time");
+
 async function loadModule() {
   try {
     const module = await import("node-fetch");
@@ -42,6 +44,24 @@ async function requestAsyncAwait(url) {
     console.error("Async/Await error: ", error);
   }
 }
-requestCallback(url, console.log); // would print out the execution time
-requestPromise(url).then(console.log);
-requestAsyncAwait(url);
+// requestCallback(url, console.log); // would print out the execution time
+// requestPromise(url).then(console.log);
+// requestAsyncAwait(url);
+
+// Start the timer
+console.time("Total Execution Time");
+
+// Run the requests and measure the total execution time
+Promise.allSettled([
+  new Promise((resolve) =>
+    requestCallback(url, (data) => {
+      console.log(data);
+      resolve();
+    })
+  ),
+  requestPromise(url).then(console.log).catch(console.error),
+  requestAsyncAwait(url),
+]).then(() => {
+  // End the timer and print the total execution time
+  console.timeEnd("Total Execution Time");
+});
