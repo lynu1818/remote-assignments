@@ -22,11 +22,23 @@ app.post("/users", (req, res) => {
     const {name, email, password} = req.body;
 
     // Data validation
-    const passwordRegex = /[A-Z]/g
-    //
+    const AZRegex = /[A-Z]/g
+    const azRegex = /[a-z]/g
+    const numRegex = /[0-9]/g
+    const specialRegex = /[~`!@#$%^&*()_\-+={[}\]|:;"'<,>.?/|]/g
+
+    // test password
+    const validated_array = [
+        password.match(AZRegex),
+        password.match(azRegex),
+        password.match(numRegex),
+        password.match(specialRegex)
+    ].filter((item) => item !== null)
+
     if (
-        false &&
-        !password.match(passwordRegex)
+        validated_array.length < 3 ||
+        name == null ||
+        email == null
     ) {
         return res.status(400).json({error: "Invalid input data"});
     }
