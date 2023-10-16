@@ -79,6 +79,35 @@ app.post("/users", (req, res) => {
     });
 });
 
+// User Query API
+app.get("/users", (req, res) => {
+    // param query id
+    const id = req.query.id;
+
+    // Check if the id exists in the database
+    const idCheckQuery = "SELECT * FROM users WHERE id = ?";
+    connection.query(idCheckQuery, [id], (err, results) => {
+        if(err) {
+            console.error("Error checking id:", err);
+            return res.status(400).json({error: "Error checking id"});
+        }
+
+        if(results.length === 0) {
+            return res.status(403).json({error: "User not found"});
+        }
+
+        const responseData = {
+            user: {
+                id: results[0].id,
+                name: results[0].name,
+                email: results[0].email,
+            },
+            "request-date": new Date().toUTCString(),
+        }
+        res.status(200).json({data: responseData});
+    })
+})
+
 app.listen(port, () => {
     console.log(`Server is running at http://localhost:${port}`);
 });
