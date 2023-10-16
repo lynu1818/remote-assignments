@@ -6,7 +6,7 @@ const connection = mysql.createConnection({
   host: "ubuntu.cqs8aumtlhcg.ap-southeast-2.rds.amazonaws.com",
   user: "admin",
   password: "lynu**18",
-  //database: ''
+  database: 'assignment'
 });
 
 
@@ -71,7 +71,7 @@ app.post("/users", (req, res) => {
   });
 });
 
-app.listen(port, () => {
-  console.log(`Server is running at http://localhost:${port}`);
+app.listen(port, (hostname) => {
+  console.log(`Server is running at http://${hostname}:${port}`);
 });
 
