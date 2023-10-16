@@ -1,1 +1,5 @@
-node_modules/
+.idea
+node_modules
+/healthcheck/node_modules
+/UserSignUp/node_modules
+/UserQuery/node_modules
