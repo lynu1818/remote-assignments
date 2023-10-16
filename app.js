@@ -22,15 +22,10 @@ app.post("/users", (req, res) => {
     const {name, email, password} = req.body;
 
     // Data validation
-    // const nameRegex = /^[A-Za-z0-9]+$/;
-    // const emailRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
-    // const passwordRegex =
-    // /^(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9~`!@#$%^&*()_-+={[}\]|:;"'<,>.?/|]).{8,}$/;
+    const passwordRegex = /[A-Z]/g
     //
     if (
         false ||
-        !name.match(nameRegex) ||
-        !email.match(emailRegex) ||
         !password.match(passwordRegex)
     ) {
         return res.status(400).json({error: "Invalid input data"});
