@@ -71,7 +71,7 @@ app.post("/users", (req, res) => {
   });
 });
 
-app.listen(port, (hostname) => {
-  console.log(`Server is running at http://${hostname}:${port}`);
+app.listen(port, () => {
+  console.log(`Server is running at http://localhost:${port}`);
 });
 
