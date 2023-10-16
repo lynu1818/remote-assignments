@@ -25,7 +25,7 @@ app.post("/users", (req, res) => {
     const passwordRegex = /[A-Z]/g
     //
     if (
-        false ||
+        false &&
         !password.match(passwordRegex)
     ) {
         return res.status(400).json({error: "Invalid input data"});
