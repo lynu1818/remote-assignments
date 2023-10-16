@@ -1,5 +1,6 @@
 const express = require("express");
 const mysql = require("mysql2");
+const bcrypt = require('bcrypt');
 const app = express();
 const port = 3000;
 const connection = mysql.createConnection({
@@ -58,7 +59,7 @@ app.post("/users", (req, res) => {
         // Insert data into the database
         const insertQuery =
             "INSERT INTO users (name, email, password) VALUES (?, ?, ?)";
-        connection.query(insertQuery, [name, email, password], (err, results) => {
+        connection.query(insertQuery, [name, email, bcrypt.hashSync(password, 10)], (err, results) => {
             if (err) {
                 console.error("Error inserting data:", err);
                 return res.status(500).json({error: "Error inserting data"});
