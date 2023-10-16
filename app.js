@@ -3,11 +3,13 @@ const mysql = require("mysql2");
 const bcrypt = require('bcrypt');
 const app = express();
 const port = 3000;
+require('dotenv').config();
+
 const connection = mysql.createConnection({
-    host: "ubuntu.cqs8aumtlhcg.ap-southeast-2.rds.amazonaws.com",
-    user: "admin",
-    password: "lynu**18",
-    database: 'assignment'
+    host: process.env.DB_HOST,
+    user: process.env.DB_USER,
+    password: process.env.DB_PASS,
+    database: process.env.DB_NAME
 });
 
 
