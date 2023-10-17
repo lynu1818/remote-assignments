@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+
+</head>
+<body>
+<h2 style="font-weight: bold">User Sign Up</h2>
+
+<label for="name">Name:</label>
+<input type="text" name="name" id="name" required><br>
+<label for="email">Email:</label>
+<input type="email" name="email" id="email" required><br>
+<label for="password">Password:</label>
+<input type="password" name="password" id="password" required><br>
+<button id="signup">Sign Up</button>
+
+<script>
+    document.querySelector("#signup").addEventListener("click", function () {
+        const name = document.querySelector("#name").value;
+        const email = document.querySelector("#email").value;
+        const password = document.querySelector("#password").value;
+
+        fetch("/api/users", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({name, email, password})
+        }).then(response => response.json())
+        .then(result => {
+            if (result.data) {
+                alert(JSON.stringify(result.data.user));
+            } else {
+                alert(result.error);
+            }
+        })
+
+    })
+</script>
+
+</body>
+</html>
